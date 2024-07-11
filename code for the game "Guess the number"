@@ -1,28 +1,20 @@
-import random
+from googletrans import Translator
 
-def guess_the_number():
-    # Компьютер загадывает число от 1 до 100
-    number_to_guess = random.randint(1, 100)
-    attempts = 0
-    
-    print("Добро пожаловать в игру 'Угадай число'!")
-    print("Я загадал число от 1 до 100. Попробуй угадать его.")
-    
-    while True:
-        try:
-            # Игрок вводит свою догадку
-            guess = int(input("Введите ваше предположение: "))
-            attempts += 1
-            
-            if guess < number_to_guess:
-                print("Ваше число меньше загаданного.")
-            elif guess > number_to_guess:
-                print("Ваше число больше загаданного.")
-            else:
-                print(f"Поздравляю! Вы угадали число {number_to_guess} за {attempts} попыток.")
-                break
-        except ValueError:
-            print("Пожалуйста, введите корректное число.")
+def translate_text(text, src_lang='auto', dest_lang='en'):
+    translator = Translator()
+    translation = translator.translate(text, src=src_lang, dest=dest_lang)
+    return translation.text
 
-# Запуск игры
-guess_the_number()
+if __name__ == "__main__":
+    print("Welcome to the simple translator!")
+    text_to_translate = input("Enter the text you want to translate: ")
+    source_language = input("Enter the source language (or leave blank for auto-detection): ")
+    target_language = input("Enter the target language (default is 'en' for English): ")
+
+    if not source_language:
+        source_language = 'auto'
+    if not target_language:
+        target_language = 'en'
+
+    translated_text = translate_text(text_to_translate, source_language, target_language)
+    print(f"Translated text: {translated_text}")
